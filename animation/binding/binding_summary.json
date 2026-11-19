@@ -1,0 +1,30 @@
+{
+ "Li_index": 662,
+ "Li_site": "SIII",
+ "Li-N_A": 2.063,
+ "Li-N-N_deg": 171.22,
+ "N-N_A": 1.1158,
+ "N-N_gas_MACE_A": 1.1124,
+ "Li-N2_centre_of_mass_A": 2.616,
+ "N2_axis_vs_Li_to_cage_centre_deg": 42.1,
+ "Li-O_framework_3_nearest_A": [
+  1.924,
+  1.961,
+  2.835
+ ],
+ "nearest_framework_contacts": {
+  "N_inner": [
+   "O18: 3.25 A",
+   "O74: 3.31 A",
+   "O354: 3.38 A"
+  ],
+  "N_outer": [
+   "O255: 3.30 A",
+   "Li617: 3.51 A",
+   "O74: 3.62 A"
+  ]
+ },
+ "E_int_vs_gas_N2_kJmol_MACE": -33.7,
+ "linear_end_on_above_minimum_kJmol": 8.8,
+ "second_basin_169deg_above_minimum_kJmol": 3.3
+}

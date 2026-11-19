@@ -1,0 +1,131 @@
+{
+ "Li_index": 662,
+ "Li_site": "SIII",
+ "Li_O_coordination": 2,
+ "Li_candidates_in_cage": [
+  {
+   "index": 662,
+   "cn": 2,
+   "r_centre": 6.175,
+   "view_depth": 0.59
+  },
+  {
+   "index": 654,
+   "cn": 2,
+   "r_centre": 6.148,
+   "view_depth": -0.572
+  },
+  {
+   "index": 652,
+   "cn": 3,
+   "r_centre": 6.168,
+   "view_depth": -0.652
+  },
+  {
+   "index": 651,
+   "cn": 3,
+   "r_centre": 6.253,
+   "view_depth": -0.665
+  }
+ ],
+ "axis_vs_Li_to_centre_deg": 1.9,
+ "runs": {
+  "d2.2": {
+   "start": {
+    "Li-N_A": 2.2,
+    "Li-N-N_deg": 180.0,
+    "N-N_A": 1.098,
+    "closest_other_atom": "O354",
+    "closest_other_A": 3.753,
+    "N2_axis_vs_Li_to_centre_deg": 1.9
+   },
+   "final": {
+    "Li-N_A": 2.019,
+    "Li-N-N_deg": 178.75,
+    "N-N_A": 1.1162,
+    "closest_other_atom": "O354",
+    "closest_other_A": 3.583,
+    "N2_axis_vs_Li_to_centre_deg": 2.8
+   },
+   "E_eV": -4893.763063496575,
+   "converged": true,
+   "steps": 15
+  },
+  "d2.6": {
+   "start": {
+    "Li-N_A": 2.6,
+    "Li-N-N_deg": 180.0,
+    "N-N_A": 1.098,
+    "closest_other_atom": "O354",
+    "closest_other_A": 4.121,
+    "N2_axis_vs_Li_to_centre_deg": 1.9
+   },
+   "final": {
+    "Li-N_A": 2.019,
+    "Li-N-N_deg": 178.71,
+    "N-N_A": 1.1162,
+    "closest_other_atom": "O354",
+    "closest_other_A": 3.584,
+    "N2_axis_vs_Li_to_centre_deg": 3.1
+   },
+   "E_eV": -4893.762670051025,
+   "converged": true,
+   "steps": 21
+  },
+  "d3.0": {
+   "start": {
+    "Li-N_A": 3.0,
+    "Li-N-N_deg": 180.0,
+    "N-N_A": 1.098,
+    "closest_other_atom": "O354",
+    "closest_other_A": 4.495,
+    "N2_axis_vs_Li_to_centre_deg": 1.9
+   },
+   "final": {
+    "Li-N_A": 2.019,
+    "Li-N-N_deg": 178.65,
+    "N-N_A": 1.1161,
+    "closest_other_atom": "O354",
+    "closest_other_A": 3.585,
+    "N2_axis_vs_Li_to_centre_deg": 3.2
+   },
+   "E_eV": -4893.760207533142,
+   "converged": true,
+   "steps": 27
+  },
+  "d2.4_tilt25": {
+   "start": {
+    "Li-N_A": 2.4,
+    "Li-N-N_deg": 155.0,
+    "N-N_A": 1.098,
+    "closest_other_atom": "O354",
+    "closest_other_A": 3.936,
+    "N2_axis_vs_Li_to_centre_deg": 24.6
+   },
+   "final": {
+    "Li-N_A": 2.055,
+    "Li-N-N_deg": 169.49,
+    "N-N_A": 1.1161,
+    "closest_other_atom": "O36",
+    "closest_other_A": 3.306,
+    "N2_axis_vs_Li_to_centre_deg": 39.7
+   },
+   "E_eV": -4893.825340826483,
+   "converged": true,
+   "steps": 64
+  }
+ },
+ "best_start": "d2.4_tilt25",
+ "geometry": {
+  "Li-N_A": 2.055,
+  "Li-N-N_deg": 169.49,
+  "N-N_A": 1.1161,
+  "closest_other_atom": "O36",
+  "closest_other_A": 3.306,
+  "N2_axis_vs_Li_to_centre_deg": 39.7
+ },
+ "N2_gas_bond_MACE_A": 1.1124,
+ "E_int_vs_gas_N2_kJmol": -30.9,
+ "E_int_vs_N2_at_cage_centre_kJmol": -29.1,
+ "note": "MACE-MP-0 + D3 numbers, framework rigid; for a plausible geometry only"
+}
