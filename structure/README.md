@@ -15,6 +15,8 @@ COD). Treat it as a **model**, not a measured structure.
 | `results/li_sites_P1.csv` | site label (SI′/SII/SIII), coordination and shortest Li–O for every Li in the P1 file | assigning Li types in a force field |
 | `results/geometry.json` | all checks below (bond lengths, angles, Li coordination, comparison with experiment, symmetry, CIF round trip) | |
 | `results/candidates.csv` | energies of the three SIII arrangements | |
+| `results/phase1_report.json` | cell, atom counts, formal-charge balance, Li per site and per supercage (`05_phase1_report.py`) | |
+| `views/*.png` | OVITO/Tachyon check renders: whole cell and one supercage with the front wall cut away (`06_view_supercage.py`, env `viz`) | |
 | `results/compare_shepelev1990*.{json,csv}` | site-by-site comparison with the published Si/Al-ordered Li,Na-X structure (section 5) | |
 
 Formula: Li₉₆[Al₉₆Si₉₆O₃₈₄], i.e. one Li per Al. In the P1 CIF the labels are
@@ -190,4 +192,6 @@ conda run -n ml python -I 01_build.py      # ~10 s, build/LiLSX_init_c{0,1,2}.ex
 for c in 0 1 2; do conda run -n ml python -I 02_relax.py $c; done
 conda run -n ml python -I 03_analyze.py    # CIFs + results/
 conda run -n ml python -I 04_compare_reference.py   # vs COD 1540962 (Shepelev 1990)
+conda run -n ml python -I 05_phase1_report.py        # charge balance, counts, supercage contents
+conda run -n viz python -I 06_view_supercage.py      # OVITO check renders -> views/
 ```
