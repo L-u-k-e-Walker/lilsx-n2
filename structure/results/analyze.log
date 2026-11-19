@@ -1,0 +1,183 @@
+candidates:
+   {'candidate': 0, 'coulomb_E': 935.7325, 'E_relaxed_eV': -4877.2629, 'a': 24.7638, 'b': 24.7638, 'c': 24.7638, 'alpha': 90.0, 'beta': 90.0, 'gamma': 90.0, 'V_A3': 15186.35, 'max_force': 0.0091, 'converged': True, 'dE_meV_per_cell': 0.0}
+   {'candidate': 1, 'coulomb_E': 935.7411, 'E_relaxed_eV': -4877.2555, 'a': 24.7661, 'b': 24.7661, 'c': 24.7661, 'alpha': 90.0, 'beta': 90.0, 'gamma': 90.0, 'V_A3': 15190.53, 'max_force': 0.0084, 'converged': True, 'dE_meV_per_cell': 7.4}
+   {'candidate': 2, 'coulomb_E': 935.7411, 'E_relaxed_eV': -4877.2526, 'a': 24.7661, 'b': 24.7661, 'c': 24.7661, 'alpha': 90.0, 'beta': 90.0, 'gamma': 90.0, 'V_A3': 15190.53, 'max_force': 0.0083, 'converged': True, 'dE_meV_per_cell': 10.3}
+best candidate: 0
+{
+ "Si-O_mean_A": 1.638,
+ "Si-O_range_A": [
+  1.5949,
+  1.6666
+ ],
+ "Al-O_mean_A": 1.7583,
+ "Al-O_range_A": [
+  1.7049,
+  1.8041
+ ],
+ "T-O-T_mean_deg": 132.42,
+ "T-O-T_range_deg": [
+  120.45,
+  150.78
+ ],
+ "Li": {
+  "SI'": {
+   "n": 32,
+   "CN(O<2.5A)_histogram": {
+    "3": 32
+   },
+   "Li-O_shortest_mean_A": 1.878,
+   "Li-O_mean_within_2.5A": 1.886,
+   "displacement_from_start_A_mean_max": [
+    0.399,
+    0.422
+   ]
+  },
+  "SII": {
+   "n": 32,
+   "CN(O<2.5A)_histogram": {
+    "3": 32
+   },
+   "Li-O_shortest_mean_A": 1.927,
+   "Li-O_mean_within_2.5A": 1.948,
+   "displacement_from_start_A_mean_max": [
+    0.14,
+    0.198
+   ]
+  },
+  "SIII": {
+   "n": 32,
+   "CN(O<2.5A)_histogram": {
+    "2": 16,
+    "3": 16
+   },
+   "Li-O_shortest_mean_A": 1.964,
+   "Li-O_mean_within_2.5A": 2.028,
+   "displacement_from_start_A_mean_max": [
+    0.479,
+    0.757
+   ]
+  }
+ },
+ "Li-Li_min_A": 4.062,
+ "spacegroup_framework_tol0.001": "P-1 (2)",
+ "spacegroup_full_tol0.001": "P-1 (2)",
+ "spacegroup_framework_tol0.01": "P-1 (2)",
+ "spacegroup_full_tol0.01": "P-1 (2)",
+ "spacegroup_framework_tol0.05": "P-1 (2)",
+ "spacegroup_full_tol0.05": "P-1 (2)",
+ "spacegroup_framework_tol0.1": "P-1 (2)",
+ "spacegroup_full_tol0.1": "P-1 (2)",
+ "comparison": {
+  "model_a_cubic_equiv_A": 24.7638,
+  "model": {
+   "SI'_from_D6R_centre_A": 2.063,
+   "SII_from_sodalite_centre_A": 4.272,
+   "x_SI'": 0.0481,
+   "x_SII": 0.2246
+  },
+  "Herden1982_LiX_SiAl1.23 (COD 1530083)": {
+   "a_A": 24.71399,
+   "x_SI'": 0.0392,
+   "x_SII": 0.2275,
+   "SI'_from_D6R_centre_A": 1.678,
+   "SII_from_sodalite_centre_A": 4.388,
+   "O_site_offset_from_model_A": {
+    "O1": {
+     "matched_exp_label": "O1",
+     "offset_A": 0.121
+    },
+    "O2": {
+     "matched_exp_label": "O3",
+     "offset_A": 0.113
+    },
+    "O3": {
+     "matched_exp_label": "O2",
+     "offset_A": 0.072
+    },
+    "O4": {
+     "matched_exp_label": "O4",
+     "offset_A": 0.14
+    }
+   }
+  },
+  "Forano1989_anhydrous_LiY_SiAl2.37 (COD 1529943)": {
+   "a_A": 24.4498,
+   "x_SI'": 0.046,
+   "x_SII": 0.2209,
+   "SI'_from_D6R_centre_A": 1.948,
+   "SII_from_sodalite_centre_A": 4.061,
+   "O_site_offset_from_model_A": {
+    "O1": {
+     "matched_exp_label": "O1",
+     "offset_A": 0.134
+    },
+    "O2": {
+     "matched_exp_label": "O3",
+     "offset_A": 0.122
+    },
+    "O3": {
+     "matched_exp_label": "O2",
+     "offset_A": 0.142
+    },
+    "O4": {
+     "matched_exp_label": "O4",
+     "offset_A": 0.186
+    }
+   }
+  }
+ },
+ "SIII_average_off_axis_before_snapping_A": 0.024,
+ "Li_individual_off_axis_A_mean_max": {
+  "LiSIp": [
+   0.103,
+   0.167
+  ],
+  "LiSII": [
+   0.058,
+   0.093
+  ],
+  "LiSIII": [
+   0.411,
+   0.717
+  ]
+ },
+ "SIII_individual_x_range": [
+  0.3742,
+  0.3772
+ ],
+ "SIII_4ring_centre_x": 0.303,
+ "SIII_beyond_4ring_centre_A": 1.807,
+ "cubic_cell_pressure_GPa": -0.0,
+ "cubic_cell_max_abs_stress_component_GPa": 0.215,
+ "free_cell": {
+  "cell_lengths_A": [
+   24.821256402852242,
+   24.90961830686259,
+   24.567265010714955
+  ],
+  "cell_angles_deg": [
+   90.68139769127305,
+   90.39206388484499,
+   90.64996121690636
+  ],
+  "volume_A3": 15187.224459557468
+ },
+ "free_minus_cubic_meV_per_cell": -347.0,
+ "orbit_rms_spread_A": {
+  "Si": 0.096,
+  "Al": 0.086,
+  "O1": 0.176,
+  "O2": 0.133,
+  "O3": 0.08,
+  "O4": 0.131,
+  "LiSIp": 0.117,
+  "LiSII": 0.087,
+  "LiSIII": 0.495
+ },
+ "best_candidate": 0
+}
+wrote LiLSX_P1_MACE.cif and LiLSX_Fd-3_averaged.cif
+Herden1982_LiX_SiAl1.23 (COD 1530083) {"SI'": {'height_A': np.float64(-0.056), 'Li-O_3nearest_A': [1.908, 1.908, 1.908]}, 'SII': {'height_A': np.float64(0.425), 'Li-O_3nearest_A': [2.027, 2.027, 2.027]}}
+Forano1989_anhydrous_LiY_SiAl2.37 (COD 1529943) {"SI'": {'height_A': np.float64(0.251), 'Li-O_3nearest_A': [1.911, 1.911, 1.911]}, 'SII': {'height_A': np.float64(0.158), 'Li-O_3nearest_A': [2.038, 2.038, 2.038]}}
+6-ring heights: {"SI'": {'mean_A': 0.304, 'min_A': 0.249, 'max_A': 0.329}, 'SII': {'mean_A': 0.289, 'min_A': 0.274, 'max_A': 0.314}}
+cif check: {'P1_atoms': 672, 'P1_formula': 'Li96 Al96 Si96 O384', 'Fd-3_sites_expanded': 688, 'Fd-3_composition': 'Li96.000016 Al96 Si96 O384', 'Fd-3_spacegroup_pymatgen': 'disordered (SIII 2/3)'}

@@ -1,0 +1,7 @@
+# raw / bulky outputs
+*.traj
+*.out
+__pycache__/
+P_*/
+runs/
+structure/build/gpu_watchdog.csv
