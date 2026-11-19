@@ -11,10 +11,11 @@ Scene
   * cutaway: framework atoms nearer the camera than a plane CUT A in front of
     the cage centre, or farther than R_KEEP from it, are not drawn
   * framework: thin muted sticks (Si, Al, O); Li+ purple spheres, the active
-    Li (SIII 662) larger and brighter; N2 bright blue
-  * Li...N interaction: dashed glowing connector painted by a viewport
+    Li (SIII 662) larger and brighter; N2 green
+  * Li...N interaction: thin dashed connector painted by a viewport
     overlay across the gap between the Li and N sphere surfaces, only when
-    Li-N < 2.8 A (fades in between 2.8 and 2.12 A, ~4 frames). Never a bond.
+    Li-N < 2.8 A (fades in between 2.8 and 2.12 A, ~4 frames). Thin, faint, no
+    glow; never a bond. Legend gives the equilibrium Li-N (2.06 A).
   * Tachyon ray tracer with ambient occlusion
 """
 import warnings
@@ -55,13 +56,16 @@ FADE_START, FADE_LEN, FADE_MAX = 2.0, 14.0, 0.62          # depth cue: blend far
 if args.bg == "dark":
     BG = (0.035, 0.045, 0.075)
     FW = {"Si": (0.62, 0.60, 0.55), "Al": (0.50, 0.58, 0.68), "O": (0.66, 0.42, 0.40)}
-    GLOW_RGB = (255, 214, 102)
+    LINE_RGB = (205, 210, 220)
 else:
     BG = (1.0, 1.0, 1.0)
     FW = {"Si": (0.70, 0.66, 0.56), "Al": (0.55, 0.63, 0.74), "O": (0.78, 0.46, 0.42)}
-    GLOW_RGB = (235, 150, 20)
+    LINE_RGB = (90, 95, 110)
 LI_RGB, LI_ACTIVE_RGB = (0.60, 0.38, 0.90), (0.86, 0.62, 1.00)
-N_RGB = (0.22, 0.60, 1.00)
+N_RGB = (0.30, 0.82, 0.42)                # nitrogen: green
+LINE_ALPHA, LINE_W = 150, 1.4             # subtle thin dashed Li...N line (no glow)
+# legend distance = equilibrium (MACE-MP-0 + D3) Li-N of the docked pose, Phase 2
+LI_N_EQ = json.loads((ROOT / "animation" / "binding" / "binding_summary.json").read_text())["Li-N_A"]
 R_FW, BOND_W = 0.09, 0.18
 R_LI, R_LI_ACTIVE, R_N = 0.55, 0.68, 0.46
 
@@ -209,29 +213,16 @@ class Glow(ViewportOverlayInterface):
         if np.linalg.norm(b2 - a2) < 2 or (b2 - a2) @ v <= 0:
             return
         f = s["on"]
-        R, G, B = GLOW_RGB
+        R, G, B = LINE_RGB
         with canvas.qt_painter() as qp:
             qp.setRenderHint(qp.RenderHint.Antialiasing)
-            # soft halo around the gap
-            c = 0.5 * (a2 + b2)
-            rad = 0.9 * np.linalg.norm(b2 - a2) + 10
-            g = QRadialGradient(QPointF(*c), rad)
-            g.setColorAt(0.0, QColor(R, G, B, int(110 * f)))
-            g.setColorAt(1.0, QColor(R, G, B, 0))
-            qp.setPen(Qt.NoPen)
-            qp.setBrush(QBrush(g))
-            qp.drawEllipse(QPointF(*c), rad, rad)
-            # dashed line with layered glow strokes (wide/faint -> thin/bright)
-            seg = np.linalg.norm(b2 - a2)
-            for width, alpha in ((9, 40), (6, 70), (3.5, 140), (1.8, 255)):
-                pen = QPen(QColor(R, G, B, int(alpha * f)))
-                pen.setWidthF(width)
-                pen.setCapStyle(Qt.RoundCap)
-                # dash pattern in units of pen width; ~3 dashes across the gap
-                dash = max(seg / 5.5, 4.0)
-                pen.setDashPattern([dash / width, dash * 0.8 / width])
-                qp.setPen(pen)
-                qp.drawLine(QPointF(*a2), QPointF(*b2))
+            # one thin, semi-transparent dashed stroke; no glow, no halo
+            pen = QPen(QColor(R, G, B, int(LINE_ALPHA * f)))
+            pen.setWidthF(LINE_W)
+            pen.setCapStyle(Qt.FlatCap)
+            pen.setDashPattern([3.0 / LINE_W, 2.5 / LINE_W])      # ~3 px dash, 2.5 px gap
+            qp.setPen(pen)
+            qp.drawLine(QPointF(*a2), QPointF(*b2))
 
 
 glow = Glow()
@@ -243,13 +234,13 @@ class Legend(ViewportOverlayInterface):
              ("sphere", LI_RGB, 0.75, "Li⁺ (extra-framework)"),
              ("sphere", LI_ACTIVE_RGB, 0.9, "Li⁺ binding site (SIII)"),
              ("n2", N_RGB, 0.7, "N₂"),
-             ("dash", None, 0.0, "Li⁺···N interaction (< 2.8 Å)")]
+             ("dash", None, 0.0, f"Li⁺···N  {LI_N_EQ:.2f} Å (equilibrium)")]
 
     def render(self, canvas, **kwargs):
         Wc, Hc = canvas.logical_size
         fs = 0.026                                      # font size (fraction of height)
         row = 0.040 * Hc                                # row pitch, px
-        box_w, box_h = 0.335 * Wc, row * (len(self.ITEMS) + 0.6)
+        box_w, box_h = 0.33 * Wc, row * (len(self.ITEMS) + 0.6)
         x0, y0 = Wc - box_w - 0.025 * Wc, Hc - box_h - 0.03 * Hc     # top-left of box (px, Qt coords)
         text_rgb = (0.86, 0.88, 0.92) if args.bg == "dark" else (0.15, 0.17, 0.22)
         with canvas.qt_painter() as qp:
@@ -260,7 +251,7 @@ class Legend(ViewportOverlayInterface):
             qp.setPen(QPen(edge, 1.0))
             qp.drawRoundedRect(x0, y0, box_w, box_h, 8, 8)
             for k, (kind, rgb, size, _) in enumerate(self.ITEMS):
-                cx, cy = x0 + 0.075 * box_w, y0 + row * (k + 0.8)
+                cx, cy = x0 + 0.8 * row, y0 + row * (k + 0.8)
                 r = 0.42 * row * size
                 if kind == "sphere":
                     g = QRadialGradient(QPointF(cx - 0.35 * r, cy - 0.35 * r), 1.4 * r)
@@ -277,17 +268,16 @@ class Legend(ViewportOverlayInterface):
                     qp.drawEllipse(QPointF(cx - 0.55 * r, cy), 0.8 * r, 0.8 * r)
                     qp.drawEllipse(QPointF(cx + 0.55 * r, cy), 0.8 * r, 0.8 * r)
                 else:
-                    R, G, B = GLOW_RGB
-                    for width, alpha in ((6, 60), (2.2, 255)):
-                        pen = QPen(QColor(R, G, B, alpha))
-                        pen.setWidthF(width)
-                        pen.setCapStyle(Qt.RoundCap)
-                        pen.setDashPattern([3.0 / width * 2, 2.6 / width * 2])
-                        qp.setPen(pen)
-                        qp.drawLine(QPointF(cx - 0.36 * row, cy), QPointF(cx + 0.36 * row, cy))
+                    R, G, B = LINE_RGB
+                    pen = QPen(QColor(R, G, B, LINE_ALPHA))
+                    pen.setWidthF(LINE_W)
+                    pen.setCapStyle(Qt.FlatCap)
+                    pen.setDashPattern([3.0 / LINE_W, 2.5 / LINE_W])
+                    qp.setPen(pen)
+                    qp.drawLine(QPointF(cx - 0.36 * row, cy), QPointF(cx + 0.36 * row, cy))
         for k, (_, _, _, label) in enumerate(self.ITEMS):
             ty = y0 + row * (k + 0.8)
-            canvas.draw_text(label, pos=((x0 + 0.15 * box_w) / Wc, 1 - ty / Hc), font_size=fs,
+            canvas.draw_text(label, pos=((x0 + 1.6 * row) / Wc, 1 - ty / Hc), font_size=fs,
                              anchor="west", color=text_rgb)
 
 

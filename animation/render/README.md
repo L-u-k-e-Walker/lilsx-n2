@@ -1,7 +1,7 @@
 # Phase 4: render (OVITO 3.17.2 Python module, Tachyon, env `viz`)
 
 Outputs:
-* `n2_lilsx.gif`: 960×720, 120 frames, 15 fps, 8.0 s, loops, 0.69 MB (ffmpeg palettegen/paletteuse)
+* `n2_lilsx.gif`: 960×720, 120 frames, 15 fps, 8.0 s, loops, 0.63 MB (ffmpeg palettegen/paletteuse)
 * `n2_lilsx.mp4`: H.264, yuv420p, CRF 18, 0.11 MB (plays more smoothly in PowerPoint than the GIF)
 * `still_070.png`: docked frame; `still_020.png`: free-flight frame
 * `render_meta.json`: camera, atom counts, timings and file sizes
@@ -42,21 +42,23 @@ in the env for this.
   * Framework: thin muted sticks (radius 0.09 Å, bond width 0.18 Å).
   * Li⁺: purple spheres (0.55 Å); the binding Li (SIII 662) is larger
     (0.68 Å) and pale violet.
-  * N₂: bright blue (0.46 Å).
+  * N₂: green (0.46 Å).
   * Background: dark.
 * **Li···N connector.**
   * It is a viewport overlay (Qt painter) drawn across the gap between the Li
-    and N sphere surfaces: a dashed gold line with layered glow strokes and a
-    soft halo.
+    and N sphere surfaces: one thin (1.4 px), semi-transparent, light-grey
+    dashed stroke, with no glow or halo.
   * It shows only while Li–N < 2.8 Å, fading in from 2.8 to 2.12 Å (about
     4 frames each way). Bound Li–N is 2.06–2.10 Å, so it is at full strength
     while docked.
   * No Li–N bond exists in the scene: bonds are made only for Si–O, Al–O and
     N–N.
 * **Legend.** An overlay, bottom right: Si, Al, O, Li⁺ (extra-framework), Li⁺
-  binding site (SIII), N₂, and the Li⁺···N interaction (< 2.8 Å).
+  binding site (SIII), N₂, and "Li⁺···N 2.06 Å (equilibrium)".
+  * That distance is the docked MACE-MP-0 + D3 equilibrium Li–N, read from
+    `../binding/binding_summary.json`.
+  * The 2.8 Å display threshold is internal and not shown.
 * **Renderer.** Tachyon with ambient occlusion (12 samples), 16× antialiasing.
   About 0.7 s per frame.
 * **GIF.** `palettegen=stats_mode=full`, then
-  `paletteuse=dither=sierra2_4a:diff_mode=rectangle`. The dithered glow halo
-  shows no visible banding.
+  `paletteuse=dither=sierra2_4a:diff_mode=rectangle`.
