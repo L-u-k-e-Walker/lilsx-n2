@@ -1,7 +1,5 @@
 # lilsx-n2
 
-[lilsx-n2/animation/render/n2_lilsx_white_dof.gif](url)
-
 N₂ adsorption in Li-LSX (Li-exchanged low-silica X, FAU, Si/Al = 1).
 
 | Folder | Status |
@@ -11,3 +9,6 @@ N₂ adsorption in Li-LSX (Li-exchanged low-silica X, FAU, Si/Al = 1).
 
 Environments: `viz` (OVITO 3.17.2, ase, ffmpeg) for rendering; `ml` (ASE 3.29, pymatgen, mace-torch 0.3.17) for the structure work.
 Bulky outputs (`*.traj`, `*.out`) are gitignored.
+
+
+<img width="960" height="720" alt="image" src="https://github.com/user-attachments/assets/bc7e0922-ac70-4067-8300-bd95747c3e56" />
