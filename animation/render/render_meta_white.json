@@ -19,12 +19,13 @@
   "O": 165,
   "Li": 19
  },
- "bg": "dark",
+ "variant": "white",
  "size": [
   960,
   720
  ],
- "render_s": 82.2,
- "gif_MB": 0.63,
- "mp4_MB": 0.11
+ "depth_of_field": null,
+ "render_s": 105.6,
+ "gif_MB": 1.1,
+ "mp4_MB": 0.12
 }

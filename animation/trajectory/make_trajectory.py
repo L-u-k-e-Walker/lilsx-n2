@@ -3,8 +3,8 @@
 120 frames at 15 fps (t = 0 ... 7.93 s), framework static:
   0.0-2.5 s  N2 drifts and tumbles in from near the supercage centre
   2.5-3.5 s  rotates end-on and docks at the bound geometry (eased)
-  3.5-6.0 s  bound: small smooth wobble of the Li-side N and libration
-  6.0-8.0 s  lifts off end-on and drifts away, back towards the cage centre
+  3.5-5.5 s  bound: small smooth wobble of the Li-side N and libration
+  5.5-8.0 s  lifts off end-on and drifts away, back towards the cage centre
 
 Seamless loop: every motion term has period 8 s (tumble rates and noise
 frequencies are integer multiples of 1/8 Hz, and the path ends where it
@@ -37,6 +37,10 @@ NFRAMES, FPS = 120, 15
 T = NFRAMES / FPS                     # 8 s period
 t_all = np.arange(NFRAMES) / FPS
 rng = np.random.default_rng(20261118)
+# storyboard times (s)
+T_DOCK, T_BOUND_END = 3.5, 5.5        # docked between these
+T_OFF = T_BOUND_END + 0.9             # lift-off keyframe (3 A out)
+W_OFF = (T_BOUND_END + 0.3, 7.6)      # orientation blends back to the tumble
 
 # distance limits checked every frame (A)
 MIN_N_FRAMEWORK = 2.9                 # N to any framework O/Si/Al
@@ -175,10 +179,10 @@ P_OFF = n_in_b + 3.0 * d_off                                   # after lift-off
 # leave P_OFF heading for P0 at the average speed needed to arrive by T,
 # blended with the lift-off direction so the path stays a smooth curve
 to_p0 = P0 - P_OFF
-speed = np.linalg.norm(to_p0) / (T - 6.9)
+speed = np.linalg.norm(to_p0) / (T - T_OFF)
 V_OFF = speed * (0.5 * d_off + 0.5 * to_p0 / np.linalg.norm(to_p0))
-keys = [(0.0, P0, V0), (2.5, P_PRE, V_PRE), (3.5, n_in_b, np.zeros(3)),
-        (6.0, n_in_b, np.zeros(3)), (6.9, P_OFF, V_OFF), (T, P0, V0)]
+keys = [(0.0, P0, V0), (2.5, P_PRE, V_PRE), (T_DOCK, n_in_b, np.zeros(3)),
+        (T_BOUND_END, n_in_b, np.zeros(3)), (T_OFF, P_OFF, V_OFF), (T, P0, V0)]
 
 
 def w_bind(t):
@@ -187,10 +191,10 @@ def w_bind(t):
         return 0.0
     if t < 3.5:
         return float(smootherstep((t - 1.6) / 1.9))
-    if t < 6.3:
+    if t < W_OFF[0]:
         return 1.0
-    if t < 7.9:
-        return float(1 - smootherstep((t - 6.3) / 1.6))
+    if t < W_OFF[1]:
+        return float(1 - smootherstep((t - W_OFF[0]) / (W_OFF[1] - W_OFF[0])))
     return 0.0
 
 
@@ -235,7 +239,7 @@ def frame(t):
 
 
 # ---------------------------------------------------------------- tumble search
-MIN_TUMBLE_IN, MIN_TUMBLE_OUT = 150.0, 90.0   # deg of rotation in 0-2 s and 6.8-8 s
+MIN_TUMBLE_IN, MIN_TUMBLE_OUT = 150.0, 90.0   # deg of rotation in 0-2 s and T_OFF-8 s
 
 
 def max_rot_and_ok():
@@ -247,7 +251,7 @@ def max_rot_and_ok():
             step = np.degrees(np.arccos(np.clip(u @ prev_u, -1, 1)))
             worst = max(worst, step)
             cin += step if t <= 2.0 else 0.0
-            cout += step if t > 6.8 else 0.0
+            cout += step if t > T_OFF else 0.0
         prev_u = u
         N = np.array([n_in, n_out])
         d = np.linalg.norm(mic(fw.positions[None, :, :] - N[:, None, :]), axis=2)
@@ -269,7 +273,7 @@ for trial in range(300):
     worst, ok = max_rot_and_ok()
     if ok and (best is None or worst < best[0]):
         best = (worst, c1, c2, cq, trial)
-TUMBLE_SEARCH = {"trials": 300, "min_rotation_deg_0-2s": MIN_TUMBLE_IN, "min_rotation_deg_6.8-8s": MIN_TUMBLE_OUT, "best_trial": best[4], "max_rot_deg_per_frame": round(float(best[0]), 2)}
+TUMBLE_SEARCH = {"trials": 300, "min_rotation_deg_0-2s": MIN_TUMBLE_IN, "min_rotation_deg_after_lift_off": MIN_TUMBLE_OUT, "best_trial": best[4], "max_rot_deg_per_frame": round(float(best[0]), 2)}
 _, n1, n2, q_ref, _ = best
 print("tumble search:", TUMBLE_SEARCH)
 
@@ -328,8 +332,9 @@ with open(HERE / "trajectory_qc.csv", "w", newline="") as fh:
 write(HERE / "anim.extxyz", images)
 
 col = {k: np.array([r.get(k, np.nan) for r in rows], float) for k in rows[1]}
-bound = (t_all >= 3.5) & (t_all < 6.0)
+bound = (t_all >= T_DOCK) & (t_all < T_BOUND_END)
 qc = {
+    "storyboard_s": {"approach": [0, 2.5], "dock": [2.5, T_DOCK], "bound": [T_DOCK, T_BOUND_END], "leave": [T_BOUND_END, T]},
     "frames": NFRAMES, "fps": FPS, "duration_s": T, "active_li": LI, "N-N_A": round(D_NN, 4),
     "min_N_framework_A": float(np.nanmin(col["min_N_framework_A"])),
     "min_N_other_Li_A": float(np.nanmin(col["min_N_other_Li_A"])),

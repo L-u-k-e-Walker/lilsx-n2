@@ -3,7 +3,11 @@
 usage:
   python render.py --still 70            one frame -> still_070.png
   python render.py --all                 120 frames -> frames/, then GIF + MP4
-  options: --bg dark|white  --size 960x720
+  options: --variant dark|white|white_dof  --size 960x720  --orbit DEG
+  variants: dark       dark background (main)
+            white      white background, same scene
+            white_dof  white background, wider framework shell (R_T 19 A) with
+                       depth of field focused on the binding Li (background blurred)
 
 Scene
   * camera fixed, looking into the supercage centred at (3/8,3/8,3/8); tilted
@@ -41,7 +45,7 @@ ROOT = HERE.parents[1]
 ap = argparse.ArgumentParser()
 ap.add_argument("--still", type=int)
 ap.add_argument("--all", action="store_true")
-ap.add_argument("--bg", default="dark", choices=["dark", "white"])
+ap.add_argument("--variant", default="dark", choices=["dark", "white", "white_dof"])
 ap.add_argument("--size", default="960x720")
 ap.add_argument("--orbit", type=float, default=None, help="camera orbit about the bound N2 axis (deg)")
 ap.add_argument("--out", default=None, help="still output file name")
@@ -50,10 +54,16 @@ W, H = map(int, args.size.split("x"))
 
 # ---------------------------------------------------------------- look
 GLOW_ON, GLOW_FULL = 2.8, 2.12        # A: connector appears below 2.8, full by 2.12 (bound: 2.06-2.10)
-CUT, R_T = 1.5, 13.0                  # A: cutaway plane offset; T atoms kept within R_T of the cage centre
+VARIANT = args.variant
+BGMODE = "dark" if VARIANT == "dark" else "white"
+DOF = VARIANT == "white_dof"
+CUT = 1.5                             # A: cutaway plane offset in front of the cage centre
+R_T = 19.0 if DOF else 13.0           # A: T atoms kept within R_T of the cage centre
 ORBIT_DEG = 25.0 if args.orbit is None else args.orbit   # camera rotation about the bound N2 axis
-FADE_START, FADE_LEN, FADE_MAX = 2.0, 14.0, 0.62          # depth cue: blend far atoms towards the background
-if args.bg == "dark":
+FADE_START, FADE_LEN = 2.0, 14.0                          # depth cue: blend far atoms towards the background
+FADE_MAX = 0.35 if DOF else 0.62                          # (with depth of field the blur carries the depth)
+APERTURE = 0.25                                            # A, Tachyon lens radius for white_dof
+if BGMODE == "dark":
     BG = (0.035, 0.045, 0.075)
     FW = {"Si": (0.62, 0.60, 0.55), "Al": (0.50, 0.58, 0.68), "O": (0.66, 0.42, 0.40)}
     LINE_RGB = (205, 210, 220)
@@ -66,7 +76,7 @@ N_RGB = (0.30, 0.82, 0.42)                # nitrogen: green
 LINE_ALPHA, LINE_W = 150, 1.4             # subtle thin dashed Li...N line (no glow)
 # legend distance = equilibrium (MACE-MP-0 + D3) Li-N of the docked pose, Phase 2
 LI_N_EQ = json.loads((ROOT / "animation" / "binding" / "binding_summary.json").read_text())["Li-N_A"]
-R_FW, BOND_W = 0.09, 0.18
+R_FW, BOND_W = 0.13, 0.26
 R_LI, R_LI_ACTIVE, R_N = 0.55, 0.68, 0.46
 
 # ---------------------------------------------------------------- data
@@ -242,11 +252,11 @@ class Legend(ViewportOverlayInterface):
         row = 0.040 * Hc                                # row pitch, px
         box_w, box_h = 0.33 * Wc, row * (len(self.ITEMS) + 0.6)
         x0, y0 = Wc - box_w - 0.025 * Wc, Hc - box_h - 0.03 * Hc     # top-left of box (px, Qt coords)
-        text_rgb = (0.86, 0.88, 0.92) if args.bg == "dark" else (0.15, 0.17, 0.22)
+        text_rgb = (0.86, 0.88, 0.92) if BGMODE == "dark" else (0.15, 0.17, 0.22)
         with canvas.qt_painter() as qp:
             qp.setRenderHint(qp.RenderHint.Antialiasing)
             bgc = QColor(int(BG[0] * 255), int(BG[1] * 255), int(BG[2] * 255), 205)
-            edge = QColor(255, 255, 255, 40) if args.bg == "dark" else QColor(0, 0, 0, 40)
+            edge = QColor(255, 255, 255, 40) if BGMODE == "dark" else QColor(0, 0, 0, 40)
             qp.setBrush(QBrush(bgc))
             qp.setPen(QPen(edge, 1.0))
             qp.drawRoundedRect(x0, y0, box_w, box_h, 8, 8)
@@ -299,8 +309,13 @@ vp = Viewport(type=Viewport.Type.Perspective, camera_pos=tuple(TARGET - CAM_DIST
 vp.overlays.append(PythonViewportOverlay(delegate=glow))
 vp.overlays.append(PythonViewportOverlay(delegate=legend))
 renderer = TachyonRenderer(ambient_occlusion=True, ambient_occlusion_brightness=0.8,
-                           ambient_occlusion_samples=12, antialiasing_samples=16,
+                           ambient_occlusion_samples=12, antialiasing_samples=64 if DOF else 16,
                            direct_light_intensity=0.95)
+FOCUS_DIST = float((fw_pos[active_k] - (TARGET - CAM_DIST * DIR)) @ DIR)   # camera -> binding Li, along the view
+if DOF:
+    renderer.depth_of_field = True
+    renderer.focal_length = FOCUS_DIST
+    renderer.aperture = APERTURE
 
 
 def glow_factor(dist):
@@ -320,26 +335,27 @@ def render_frame(i, path):
 
 meta = {"camera_dir": DIR.round(4).tolist(), "tilt_from_111_deg": round(tilt_deg, 1),
         "target": TARGET.round(3).tolist(), "camera_distance_A": CAM_DIST, "fov_deg": round(np.degrees(FOV), 2),
-        "orbit_deg": ORBIT_DEG, "atoms_drawn": {e: int((fw_sym == e).sum()) for e in ("Si", "Al", "O", "Li")}, "bg": args.bg, "size": [W, H]}
+        "orbit_deg": ORBIT_DEG, "atoms_drawn": {e: int((fw_sym == e).sum()) for e in ("Si", "Al", "O", "Li")}, "variant": VARIANT, "size": [W, H],
+        "depth_of_field": {"focal_length_A": round(FOCUS_DIST, 2), "aperture_A": APERTURE} if DOF else None}
 print(json.dumps(meta))
 
 if args.still is not None:
     t0 = time.time()
-    out = HERE / (args.out or f"still_{args.still:03d}{'' if args.bg == 'dark' else '_white'}.png")
+    out = HERE / (args.out or f"still_{args.still:03d}_{VARIANT}.png")
     f = render_frame(args.still, out)
     print(f"wrote {out.name}  glow={f:.2f}  Li-N={frames[args.still].info['li_n_A']:.3f} A  "
           f"{time.time() - t0:.1f} s")
 
 if args.all:
-    FR = HERE / "frames"
-    FR.mkdir(exist_ok=True)
+    FR = HERE / "frames" / VARIANT
+    FR.mkdir(parents=True, exist_ok=True)
     for p in FR.glob("*.png"):
         p.unlink()
     t0 = time.time()
     for i in range(len(frames)):
         render_frame(i, FR / f"f_{i:04d}.png")
     t_render = time.time() - t0
-    suffix = "" if args.bg == "dark" else "_white"
+    suffix = f"_{VARIANT}"
     gif, mp4, pal = HERE / f"n2_lilsx{suffix}.gif", HERE / f"n2_lilsx{suffix}.mp4", FR / "palette.png"
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", "15", "-i", str(FR / "f_%04d.png"),
                     "-vf", "palettegen=max_colors=256:stats_mode=full", str(pal)], check=True)

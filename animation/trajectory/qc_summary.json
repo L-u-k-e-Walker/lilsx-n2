@@ -1,11 +1,29 @@
 {
+ "storyboard_s": {
+  "approach": [
+   0,
+   2.5
+  ],
+  "dock": [
+   2.5,
+   3.5
+  ],
+  "bound": [
+   3.5,
+   5.5
+  ],
+  "leave": [
+   5.5,
+   8.0
+  ]
+ },
  "frames": 120,
  "fps": 15,
  "duration_s": 8.0,
  "active_li": 662,
  "N-N_A": 1.1158,
  "min_N_framework_A": 3.209,
- "min_N_other_Li_A": 2.926,
+ "min_N_other_Li_A": 2.919,
  "min_Li-N_A": 2.059,
  "j_near_other_Li": 617,
  "bound_Li-N_range_A": [
@@ -18,21 +36,21 @@
  ],
  "glow_frames": [
   46,
-  95
+  87
  ],
  "glow_seconds": [
   3.067,
-  6.333
+  5.8
  ],
- "max_step_N_A_per_frame": 0.326,
- "max_rot_deg_per_frame": 8.65,
+ "max_step_N_A_per_frame": 0.298,
+ "max_rot_deg_per_frame": 7.57,
  "loop_seam_A": 0.0,
  "tumble_search": {
   "trials": 300,
   "min_rotation_deg_0-2s": 150.0,
-  "min_rotation_deg_6.8-8s": 90.0,
-  "best_trial": 161,
-  "max_rot_deg_per_frame": 8.65
+  "min_rotation_deg_after_lift_off": 90.0,
+  "best_trial": 164,
+  "max_rot_deg_per_frame": 7.57
  },
  "limits": {
   "N-framework": 2.9,

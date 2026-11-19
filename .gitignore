@@ -7,3 +7,4 @@ runs/
 structure/build/gpu_watchdog.csv
 *:Zone.Identifier
 frames/
+animation/render/render_*.log

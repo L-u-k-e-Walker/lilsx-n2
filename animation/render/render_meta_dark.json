@@ -1,0 +1,31 @@
+{
+ "camera_dir": [
+  0.677,
+  0.0152,
+  0.7358
+ ],
+ "tilt_from_111_deg": 34.5,
+ "target": [
+  9.568,
+  10.516,
+  8.989
+ ],
+ "camera_distance_A": 60.0,
+ "fov_deg": 22.62,
+ "orbit_deg": 25.0,
+ "atoms_drawn": {
+  "Si": 32,
+  "Al": 34,
+  "O": 165,
+  "Li": 19
+ },
+ "variant": "dark",
+ "size": [
+  960,
+  720
+ ],
+ "depth_of_field": null,
+ "render_s": 103.1,
+ "gif_MB": 0.79,
+ "mp4_MB": 0.11
+}
