@@ -15,6 +15,7 @@ COD). Treat it as a **model**, not a measured structure.
 | `results/li_sites_P1.csv` | site label (SI′/SII/SIII), coordination and shortest Li–O for every Li in the P1 file | assigning Li types in a force field |
 | `results/geometry.json` | all checks below (bond lengths, angles, Li coordination, comparison with experiment, symmetry, CIF round trip) | |
 | `results/candidates.csv` | energies of the three SIII arrangements | |
+| `results/compare_shepelev1990*.{json,csv}` | site-by-site comparison with the published Si/Al-ordered Li,Na-X structure (section 5) | |
 
 Formula: Li₉₆[Al₉₆Si₉₆O₃₈₄], i.e. one Li per Al. In the P1 CIF the labels are
 element symbols only (RASPA reads labels as pseudo-atom types), and the atom
@@ -108,7 +109,68 @@ The averaged Fd-3 CIF expands back to 576 framework + 32 + 32 + 48 sites,
 with composition Li96 Al96 Si96 O384 (pymatgen round trip). Orbit rms spreads
 are 0.08–0.18 Å for framework and SI′/SII atoms and 0.50 Å for SIII.
 
-## 5. Limitations
+## 5. Comparison with a published Si/Al-ordered structure (`04_compare_reference.py`)
+
+**Reference:** COD 1540962, in `../reference_structure/`.
+* Paper: Shepelev, Anderson, Smolin, *Zeolites* **10** (1990) 61,
+  doi:10.1016/0144-2449(90)90095-9.
+* Material: partially Li-exchanged X, dehydrated at 275 °C:
+  Li41.3 Na24.3 [Al92 Si100 O384] (H₂O)8.6. Si/Al = 1.09; Fd-3 origin 2 with
+  ordered Si/Al; a = 24.75 Å.
+* Method: single-crystal X-ray, according to later citing papers.
+* Which state this file is: the same paper's hydrated state is COD 1540961
+  (69 H₂O, a = 24.82 Å; kept in `sources/1540961_Shepelev1990_hydrated.cif`).
+  That confirms 1540962 is the dehydrated one.
+
+It is the closest open structure to Li-LSX, but it is not Li-LSX: only 66 of
+the 92 charge-balancing cations are located, 24 of them are Na, and no Li is
+found in the supercage.
+
+**Overlay.** The model (Fd-3 average) was mapped onto the reference with the
+Fd-3m operation that best overlays the frameworks. Fd-3 has index 2 in Fd-3m,
+so the same structure can be written with Si and Al swapped. Model O2/O3
+correspond to reference O3/O2.
+
+| Quantity | Model (Li96, Si/Al 1.00) | Shepelev 1990 (Li41Na24, Si/Al 1.09) |
+|---|---|---|
+| a (Å) | 24.764 | 24.750 (+0.06 %) |
+| Si, Al position offset (Å) | 0.04, 0.04 | – |
+| O1, O2, O3, O4 offset (Å) | 0.08, 0.13, 0.11, 0.17 | – |
+| Si–O mean (Å) | 1.635 | 1.650 |
+| Al–O mean (Å) | 1.753 | 1.690 (Al site has 4 % Si) |
+| T–O1–T (°) | 146.5 | 146.6 |
+| T–O2–T / T–O3–T (°) | 124.7 / 125.0 | 126.5 / 133.1 |
+| T–O4–T (°) | 135.6 | 143.7 |
+| Li SI′: x, Li–O, height into sodalite | 0.0481, 1.88 Å, +0.30 Å | 0.053, 1.99 Å, +0.60 Å (25 Li) |
+| Li SII: x, Li–O, height into supercage | 0.2246, 1.95 Å, +0.29 Å | 0.210, 2.05 Å, **−0.32 Å** (16 Li; same 6-rings also hold 11 Na at x = 0.25) |
+| Supercage (SIII) | 32 Li at 48f, Li–O 1.99 Å (×2) | no Li located; 8.6 Na at 96g (0.42, 0.10, 0.10), 1.3 Å from model SIII; 26 cations unlocated |
+
+**What this shows**
+* **Framework: good agreement.** T atoms are within 0.04 Å and O within
+  0.17 Å; the cell differs by 0.06 %.
+  * The cell match is partly fortuitous: Na enlarges the reference cell, and
+    its higher Si/Al and MACE's PBE-type overestimate push in opposite
+    directions.
+  * The largest framework differences are T–O3–T and T–O4–T, 8° each. Those
+    rings border the sites where the reference has Na and water.
+  * Al–O differs by 0.06 Å. The reference Al–O (1.69 Å) is short for ordered
+    LSX (typically about 1.73 Å), and the model's is about 1.5 % long, so
+    the true value probably lies in between.
+* **Li SI′: agrees within the experimental spread.** The offset is 0.21 Å.
+  The reference heights of 0.60 Å (this X-ray study), −0.06 Å (Herden Li-X,
+  neutron) and 0.25 Å (Forano Li-Y, neutron) bracket the model's 0.30 Å.
+* **Li SII: disagrees with this reference** (0.63 Å). Here Li sits just
+  inside the sodalite cage, but in both neutron Li-faujasites (+0.43, +0.16 Å)
+  it sits on the supercage side, like the model. Most likely this is because
+  Li and Na share the SII 6-rings in this mixed-cation crystal, and Li is a
+  weak X-ray scatterer. It cannot be settled without a pure Li-LSX refinement.
+* **SIII: not tested.** No supercage Li is located in this reference.
+
+The Plévert 1997 neutron structure (ICSD) is still the reference needed to
+test SII and SIII. `04_compare_reference.py` takes any Fd-3 origin-2 CIF
+with labelled Si/Al sites; change `REF` and the cation handling to reuse it.
+
+## 6. Limitations
 
 * Not an experimental structure. Li positions are the MACE minimum starting
   from literature sites; SIII coordinates are model-derived, because no open
@@ -127,4 +189,5 @@ conda run -n ml python -I 01_build.py      # ~10 s, build/LiLSX_init_c{0,1,2}.ex
 # one GPU job at a time; ~3 min per candidate
 for c in 0 1 2; do conda run -n ml python -I 02_relax.py $c; done
 conda run -n ml python -I 03_analyze.py    # CIFs + results/
+conda run -n ml python -I 04_compare_reference.py   # vs COD 1540962 (Shepelev 1990)
 ```

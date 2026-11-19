@@ -1,0 +1,444 @@
+{
+ "reference": {
+  "cod": 1540962,
+  "citation": "Shepelev, Anderson, Smolin, Zeolites 10 (1990) 61-63",
+  "composition": "Li41.28 Na24.32 [Al92 Si100 O384] (H2O)8.64",
+  "Si/Al": 1.087,
+  "a_A": 24.75,
+  "space_group": "Fd-3 (origin 2)",
+  "cations_located_per_cell": 65.6,
+  "cations_needed_per_cell": 92,
+  "site_multiplicity_and_count": {
+   "O3": [
+    96,
+    96.0
+   ],
+   "O5": [
+    16,
+    8.64
+   ],
+   "Li1": [
+    32,
+    24.96
+   ],
+   "Al1": [
+    96,
+    92.0
+   ],
+   "Li2": [
+    32,
+    16.32
+   ],
+   "O2": [
+    96,
+    96.0
+   ],
+   "O1": [
+    96,
+    96.0
+   ],
+   "Na2": [
+    32,
+    10.88
+   ],
+   "Si1": [
+    96,
+    96.0
+   ],
+   "Na3": [
+    96,
+    8.64
+   ],
+   "Si2": [
+    96,
+    4.0
+   ],
+   "Na1": [
+    32,
+    4.8
+   ],
+   "O4": [
+    96,
+    96.0
+   ]
+  }
+ },
+ "model": {
+  "a_A": 24.7638,
+  "composition": "Li96 [Al96 Si96 O384]"
+ },
+ "a_difference_A": 0.0138,
+ "a_difference_pct": 0.056,
+ "overlay_op": {
+  "rotation": [
+   [
+    0,
+    -1,
+    0
+   ],
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    -1
+   ]
+  ],
+  "translation": [
+   0.75,
+   0.0,
+   0.75
+  ],
+  "framework_offset_sum_A": 0.554
+ },
+ "sites": [
+  {
+   "model_site": "Si",
+   "model_xyz": [
+    0.6252,
+    0.9507,
+    0.7138
+   ],
+   "ref_site": "Si1",
+   "ref_el": "Si",
+   "ref_occ": 1.0,
+   "ref_xyz_image": [
+    0.6244,
+    0.9495,
+    0.7133
+   ],
+   "offset_A": 0.038
+  },
+  {
+   "model_site": "Al",
+   "model_xyz": [
+    0.8002,
+    0.1231,
+    0.7122
+   ],
+   "ref_site": "Al1",
+   "ref_el": "Al",
+   "ref_occ": 0.9583,
+   "ref_xyz_image": [
+    0.801,
+    0.1245,
+    0.7125
+   ],
+   "offset_A": 0.04
+  },
+  {
+   "model_site": "O1",
+   "model_xyz": [
+    0.6465,
+    0.9027,
+    0.752
+   ],
+   "ref_site": "O1",
+   "ref_el": "O",
+   "ref_occ": 1.0,
+   "ref_xyz_image": [
+    0.647,
+    0.9,
+    0.7507
+   ],
+   "offset_A": 0.075
+  },
+  {
+   "model_site": "O2",
+   "model_xyz": [
+    0.6756,
+    0.9799,
+    0.6811
+   ],
+   "ref_site": "O3",
+   "ref_el": "O",
+   "ref_occ": 1.0,
+   "ref_xyz_image": [
+    0.6793,
+    0.9765,
+    0.6804
+   ],
+   "offset_A": 0.125
+  },
+  {
+   "model_site": "O3",
+   "model_xyz": [
+    0.5956,
+    0.9994,
+    0.7485
+   ],
+   "ref_site": "O2",
+   "ref_el": "O",
+   "ref_occ": 1.0,
+   "ref_xyz_image": [
+    0.5993,
+    0.999,
+    0.7508
+   ],
+   "offset_A": 0.108
+  },
+  {
+   "model_site": "O4",
+   "model_xyz": [
+    0.5829,
+    0.9246,
+    0.6709
+   ],
+   "ref_site": "O4",
+   "ref_el": "O",
+   "ref_occ": 1.0,
+   "ref_xyz_image": [
+    0.5786,
+    0.9294,
+    0.6731
+   ],
+   "offset_A": 0.168
+  },
+  {
+   "model_site": "LiSIp",
+   "model_xyz": [
+    0.7019,
+    0.0481,
+    0.7019
+   ],
+   "ref_site": "Li1",
+   "ref_el": "Li",
+   "ref_occ": 0.78,
+   "ref_xyz_image": [
+    0.697,
+    0.053,
+    0.697
+   ],
+   "offset_A": 0.211
+  },
+  {
+   "model_site": "LiSII",
+   "model_xyz": [
+    0.5254,
+    0.2246,
+    0.5254
+   ],
+   "ref_site": "Li2",
+   "ref_el": "Li",
+   "ref_occ": 0.51,
+   "ref_xyz_image": [
+    0.54,
+    0.21,
+    0.54
+   ],
+   "offset_A": 0.626
+  },
+  {
+   "model_site": "LiSIII",
+   "model_xyz": [
+    0.625,
+    0.376,
+    0.625
+   ],
+   "ref_site": "Na3",
+   "ref_el": "Na",
+   "ref_occ": 0.09,
+   "ref_xyz_image": [
+    0.604,
+    0.42,
+    0.602
+   ],
+   "offset_A": 1.335
+  }
+ ],
+ "framework_geometry": {
+  "reference": {
+   "Si1-O_mean_A": 1.6499,
+   "Si1-O_each_A": [
+    1.588,
+    1.634,
+    1.658,
+    1.719
+   ],
+   "Al1-O_mean_A": 1.69,
+   "Al1-O_each_A": [
+    1.648,
+    1.689,
+    1.695,
+    1.728
+   ],
+   "T-O3-T_deg": 126.53,
+   "T-O2-T_deg": 133.05,
+   "T-O1-T_deg": 146.64,
+   "T-O4-T_deg": 143.65
+  },
+  "model": {
+   "Si-O_mean_A": 1.6353,
+   "Si-O_each_A": [
+    1.608,
+    1.626,
+    1.65,
+    1.656
+   ],
+   "Al-O_mean_A": 1.7527,
+   "Al-O_each_A": [
+    1.712,
+    1.743,
+    1.774,
+    1.782
+   ],
+   "T-O1-T_deg": 146.47,
+   "T-O2-T_deg": 124.72,
+   "T-O3-T_deg": 125.0,
+   "T-O4-T_deg": 135.59
+  }
+ },
+ "T-O-T_by_site": [
+  {
+   "model_O": "O1",
+   "ref_O": "O1",
+   "model_TOT": 146.47,
+   "ref_TOT": 146.64
+  },
+  {
+   "model_O": "O2",
+   "ref_O": "O3",
+   "model_TOT": 124.72,
+   "ref_TOT": 126.53
+  },
+  {
+   "model_O": "O3",
+   "ref_O": "O2",
+   "model_TOT": 125.0,
+   "ref_TOT": 133.05
+  },
+  {
+   "model_O": "O4",
+   "ref_O": "O4",
+   "model_TOT": 135.59,
+   "ref_TOT": 143.65
+  }
+ ],
+ "cation_geometry": {
+  "reference": {
+   "Li1": {
+    "nearest_O_A": [
+     1.986,
+     1.986,
+     1.986,
+     3.067
+    ],
+    "nearest_O_sites": [
+     "O3",
+     "O3",
+     "O3",
+     "O2"
+    ],
+    "height_from_6ring_O_plane_A": 0.603
+   },
+   "Li2": {
+    "nearest_O_A": [
+     2.05,
+     2.05,
+     2.05,
+     3.04
+    ],
+    "nearest_O_sites": [
+     "O2",
+     "O2",
+     "O2",
+     "O4"
+    ],
+    "height_from_6ring_O_plane_A": -0.322
+   },
+   "Na2": {
+    "nearest_O_A": [
+     2.458,
+     2.458,
+     2.458,
+     3.234
+    ],
+    "nearest_O_sites": [
+     "O2",
+     "O2",
+     "O2",
+     "O4"
+    ],
+    "height_from_6ring_O_plane_A": 1.393
+   },
+   "Na3": {
+    "nearest_O_A": [
+     2.614,
+     3.255,
+     3.271,
+     3.454
+    ],
+    "nearest_O_sites": [
+     "O4",
+     "O1",
+     "O1",
+     "O4"
+    ]
+   },
+   "Na1": {
+    "nearest_O_A": [
+     2.391,
+     2.391,
+     2.391,
+     3.223
+    ],
+    "nearest_O_sites": [
+     "O3",
+     "O3",
+     "O3",
+     "O2"
+    ],
+    "height_from_6ring_O_plane_A": 1.46
+   }
+  },
+  "model": {
+   "LiSIp": {
+    "nearest_O_A": [
+     1.882,
+     1.882,
+     1.882,
+     3.118
+    ],
+    "nearest_O_sites": [
+     "O2",
+     "O2",
+     "O2",
+     "O3"
+    ],
+    "height_from_6ring_O_plane_A": 0.301
+   },
+   "LiSII": {
+    "nearest_O_A": [
+     1.947,
+     1.947,
+     1.947,
+     3.166
+    ],
+    "nearest_O_sites": [
+     "O3",
+     "O3",
+     "O3",
+     "O4"
+    ],
+    "height_from_6ring_O_plane_A": 0.289
+   },
+   "LiSIII": {
+    "nearest_O_A": [
+     1.988,
+     1.988,
+     3.172,
+     3.172
+    ],
+    "nearest_O_sites": [
+     "O4",
+     "O4",
+     "O1",
+     "O1"
+    ]
+   }
+  }
+ }
+}

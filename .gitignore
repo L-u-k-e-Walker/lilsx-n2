@@ -5,3 +5,4 @@ __pycache__/
 P_*/
 runs/
 structure/build/gpu_watchdog.csv
+*:Zone.Identifier

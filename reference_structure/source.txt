@@ -1,0 +1,23 @@
+Chemical name	Li41.28 Na24.32 (Al92 Si100 O384) (H2 O)8.64
+Formula	Al92 H17.28 Li41.28 Na24.32 O392.64 Si100
+Calculated formula	Al91.9968 Li41.28 Na24.32 O392.64 Si100.003
+Title of publication	Crystal structure of a partially lithium-exchanged X zeolite in hydrated (25 C) and dehydrated (275 C) states
+Authors of publication	Shepelev, Yu.F.; Anderson, A.A.; Smolin, Yu.I.
+Journal of publication	Zeolites
+Year of publication	1990
+Journal volume	10
+Pages of publication	61 - 63
+a	24.75 Å
+b	24.75 Å
+c	24.75 Å
+α	90°
+β	90°
+γ	90°
+Cell volume	15160.9 Å3
+Number of distinct elements	6
+Space group number	203
+Hermann-Mauguin space group symbol	F d -3 :2
+Hall space group symbol	-F 2uv 2vw 3
+Has coordinates	Yes
+Has disorder	No
+Has Fobs	No
