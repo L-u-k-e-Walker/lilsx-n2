@@ -1,5 +1,7 @@
 # lilsx-n2
 
+animation/render/n2_lilsx_white_dof.gif
+
 N₂ adsorption in Li-LSX (Li-exchanged low-silica X, FAU, Si/Al = 1).
 
 | Folder | Status |
